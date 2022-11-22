@@ -35,7 +35,10 @@ def get_acquisition_date(geotiff_path):
     with rasterio.open(geotiff_path) as src:
         if "TIFFTAG_DATETIME" in src.tags().keys():
             date_string = src.tags()["TIFFTAG_DATETIME"]
-            dt = datetime.datetime.strptime(date_string, "%Y:%m:%d %H:%M:%S")
+            try:
+                dt = datetime.datetime.strptime(date_string, "%Y:%m:%d %H:%M:%S")
+            except:
+                dt = datetime.datetime.strptime(date_string, "%Y:%m:%dT%H:%M:%S")
         else:
             # temporary fix in case the previous tag is missing
             # get datetime from skysat geotiff identifier
