@@ -192,7 +192,8 @@ class Scene:
         all_im_rpcs = []
         all_im_datetimes = []
 
-        geotiff_paths = sorted(glob.glob(os.path.join(self.geotiff_dir, "**/*.tif"), recursive=True))
+        geotiff_paths = sorted(glob.glob(os.path.join(self.geotiff_dir, "**/*.[tT][iI][fF]'"), recursive=True))
+        assert len(geotiff_paths) > 0, f"No GeoTiffs found in {self.geotiff_dir}."
         if self.geotiff_label is not None:
             geotiff_paths = [os.path.basename(fn) for fn in geotiff_paths if self.geotiff_label in fn]
 
